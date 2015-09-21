@@ -31,3 +31,8 @@
 (type (print 2 3))
 
 
+(defn x [a b]
+  (let [ab (* a b)]
+    (+ ab 3)))
+
+(x 4 3)
