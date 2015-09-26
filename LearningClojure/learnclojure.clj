@@ -53,6 +53,69 @@
 (type #{1 2 3})
 (type (hash-set 1 4 5))
 
+; Variables
+(def x "Hello Clojure")
+
+(str x)
+
+(let [x "Wagner"]
+  (print "Hello" x))
+
+; Flow Control
+; IF
+(if (empty? x)
+  "x is empty"
+  "x is not empty")
+
+(if nil "Yes" "No")
+
+; IF-NOT
+(def y "Y")
+
+(if-not (empty? y)
+  (do
+    (println "Ok")
+    :ok))
+
+; DO
+(def z "Z")
+
+(if (empty? z)
+  nil
+  (do
+    (println "Ok")
+    :ok))
+
+; WHEN-NOT
+(def t "T")
+
+(when-not (empty? t)
+  (do
+    (println "Ok")
+    :ok))
+
+(when (not (empty? t)) :ok)
+
+; CASE
+(def greeting "Hello")
+
+(case greeting
+  "Goodbye" :goodbye
+  "Hello" :hello
+  :nothing
+)
+
+; COND
+(def g "Hello")
+
+(cond
+  (= g "Goodbye") :goodbye
+  ;; (= (reverse g) "olleH") :olleH
+  ;; Unreacheable because reverse returns a List of string
+  (= (apply str (reverse g)) "olleH") :olleH
+  :otherwise :nothing)
+
+
 ; Binding definition
 (defn x [a b]
   (let [ab (* a b)]
