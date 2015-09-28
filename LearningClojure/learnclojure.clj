@@ -123,3 +123,82 @@
 
 (x 4 3)
 
+; Function
+(fn [] "Hello") ; Annonymous function
+
+(def hello (fn [] "Hello")) ; Named function
+
+(defn hello [] "Hello" )    ; Named function
+
+(defn hello [name] (str "Hello, " name))
+(hello "Wagner")
+
+(defn hello [title, name] (str "Hello, " title " " name))
+; OR
+(defn hello [title name] (str "Hello, " title " " name))
+; OR
+(defn hello "Greets a person named <name> with their <title>" [title name] (str "Hello, " title " " name))
+
+(hello "Mr" "Wagner")
+
+; Function documentation
+
+(require '[clojure.repl :refer [doc]])
+(doc hello)
+
+; Function with multiples arguments
+(defn hello [& args]
+  (str "Hello, " (apply str args)))
+
+; Function with diferents answers for differents caller
+(defn hello
+  ([] "Hello, World")            ; Answer that or
+  ([name] (str "Hello, " name))  ; answer this way.
+)
+
+; Function overloaded
+(defn hello
+  ([] hello "World")            ; Answer that or
+  ([name] (str "Hi, " name))    ; answer this way.
+)
+
+; Function prints the value of key, passing a map - 1
+(defn hello [config]
+  (str "Hello, " (:name config)))
+(hello {:name "Joe"})
+
+; Function prints the value of key, passing a map - 2
+(defn hello [{name :name}]
+  (str "Hello, " name))
+(hello {:name "Joe"})
+
+; Function prints the value a vector
+(defn hello [[name title]]
+  (str "Hello, " title " " name))
+(hello ["Lucy" "Admiral"])
+
+; User input function
+
+(defn prompt [question]
+  (println question)
+    (read-line))
+
+(prompt "How old are you?")
+
+(with-in-str "34" (prompt "How old are you?")) ; Call a function and pass the parameter.
+
+; XML function
+(spit "hello.xml"
+      (with-out-str
+        (emit
+         {:tag :parent :attrs {:value "HelloClojureWorld"}
+          :content [
+                   {:tag :child :attrs {:value (str (java.util.Date.))}}
+                   {:tag :child :attrs {:value (System/getProperty "os.name")}}
+                   {:tag :child :attrs {:value (System/getProperty "os.version")}}
+                   {:tag :child :attrs {:value (System/getProperty "os.arch")}}
+                   ]
+          }
+         )
+      )
+)
